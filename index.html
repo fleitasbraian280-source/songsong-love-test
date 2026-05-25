@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>松松是否爱你测试</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background: linear-gradient(135deg,#ffd6e7,#ffeef5);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .card{
+      width:100%;
+      max-width:420px;
+      background:#fff;
+      border-radius:28px;
+      padding:30px 24px;
+      box-shadow:0 10px 30px rgba(255,105,180,0.15);
+    }
+
+    .title{
+      text-align:center;
+      font-size:30px;
+      font-weight:700;
+      color:#ff4f8b;
+      margin-bottom:10px;
+    }
+
+    .sub{
+      text-align:center;
+      color:#999;
+      margin-bottom:28px;
+      font-size:14px;
+    }
+
+    .question{
+      margin-bottom:24px;
+      padding:18px;
+      border-radius:18px;
+      background:#fff5f9;
+    }
+
+    .question h3{
+      font-size:17px;
+      color:#333;
+      margin-bottom:14px;
+      line-height:1.5;
+    }
+
+    .options{
+      display:flex;
+      gap:12px;
+    }
+
+    .options label{
+      flex:1;
+      cursor:pointer;
+    }
+
+    .options input{
+      display:none;
+    }
+
+    .btn{
+      display:block;
+      width:100%;
+      padding:13px;
+      border:none;
+      border-radius:16px;
+      background:linear-gradient(135deg,#ff5f9e,#ff8ab5);
+      color:#fff;
+      font-size:17px;
+      font-weight:600;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .choice{
+      padding:12px 0;
+      border-radius:14px;
+      text-align:center;
+      background:#fff;
+      border:2px solid #ffd1e1;
+      color:#ff5f9e;
+      font-weight:600;
+      transition:0.2s;
+    }
+
+    input:checked + .choice{
+      background:#ff5f9e;
+      color:#fff;
+      border-color:#ff5f9e;
+    }
+
+    #result{
+      margin-top:24px;
+      display:none;
+      padding:22px;
+      border-radius:20px;
+      background:#fff5fa;
+      text-align:center;
+      animation:show .3s ease;
+    }
+
+    #result h2{
+      color:#ff4f8b;
+      margin-bottom:10px;
+    }
+
+    #result p{
+      color:#555;
+      line-height:1.8;
+      font-size:16px;
+    }
+
+    @keyframes show{
+      from{
+        opacity:0;
+        transform:translateY(10px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .heart{
+      font-size:40px;
+      margin-bottom:10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <div class="title">❤️ 松松是否爱你测试 ❤️</div>
+    <div class="sub">认真回答三道题，看看松松对你的感情吧～</div>
+
+    <div class="question">
+      <h3>1、松松是否每天找你打游戏？</h3>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="q1" value="1">
+          <div class="choice">是</div>
+        </label>
+
+        <label>
+          <input type="radio" name="q1" value="0">
+          <div class="choice">否</div>
+        </label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>2、松松是否跟你聊过感情问题？</h3>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="q2" value="1">
+          <div class="choice">是</div>
+        </label>
+
+        <label>
+          <input type="radio" name="q2" value="0">
+          <div class="choice">否</div>
+        </label>
+      </div>
+    </div>
+
+    <div class="question">
+      <h3>3、松松是否为你吃过醋？</h3>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="q3" value="1">
+          <div class="choice">是</div>
+        </label>
+
+        <label>
+          <input type="radio" name="q3" value="0">
+          <div class="choice">否</div>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn" onclick="checkLove()">查看结果</button>
+
+    <div id="result">
+      <div class="heart">💖</div>
+      <h2 id="resultTitle"></h2>
+      <p id="resultText"></p>
+    </div>
+
+  </div>
+
+  <script>
+    function checkLove() {
+
+      let score = 0;
+
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+
+      if(!q1 || !q2 || !q3){
+        alert("请先回答完全部问题哦～");
+        return;
+      }
+
+      score += Number(q1.value);
+      score += Number(q2.value);
+      score += Number(q3.value);
+
+      const result = document.getElementById("result");
+      const title = document.getElementById("resultTitle");
+      const text = document.getElementById("resultText");
+
+      if(score === 3){
+        title.innerHTML = "松松绝对爱你！";
+        text.innerHTML = "每天陪你、和你聊感情、还会因为你吃醋，这已经不是普通朋友啦～";
+      }
+      else if(score === 2){
+        title.innerHTML = "松松可能爱你！";
+        text.innerHTML = "你在松松心里的位置明显不一般，已经很接近喜欢了！";
+      }
+      else if(score === 1){
+        title.innerHTML = "松松是你的好朋友！";
+        text.innerHTML = "虽然还没到爱情，但松松一定很在意你，是关系很好的朋友～";
+      }
+      else{
+        title.innerHTML = "再观察观察吧！";
+        text.innerHTML = "也许松松只是比较害羞，或者你们的故事才刚刚开始。";
+      }
+
+      result.style.display = "block";
+
+      result.scrollIntoView({
+        behavior:"smooth"
+      });
+    }
+  </script>
+
+</body>
+</html>
